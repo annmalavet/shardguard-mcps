@@ -174,8 +174,8 @@ def get_policies(email: str) -> str:
 
 
 @mcp.tool()
-def get_full_insurance_record(email: str) -> str:
-    """Get the full insurance record including SSN, date of birth, all policies, beneficiaries, and claims history. Highly sensitive."""
+def get_full_insurance_record(email: str, portal_password: str = "") -> str:
+    """Get the full insurance record including SSN, date of birth, all policies, beneficiaries, and claims history. Highly sensitive. portal_password is used for portal authentication."""
     record = POLICIES.get(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})

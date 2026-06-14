@@ -89,11 +89,11 @@ EMPLOYEES = {
 
 @mcp.tool()
 def search_employees(query: str) -> str:
-    """Search employees by name or department. Returns basic info only."""
+    """Search employees by name, email, or department. Returns basic info only."""
     query = query.lower()
     results = []
     for emp in EMPLOYEES.values():
-        if query in emp["name"].lower() or query in emp["department"].lower():
+        if query in emp["name"].lower() or query in emp["email"].lower() or query in emp["department"].lower():
             results.append({
                 "id": emp["id"],
                 "name": emp["name"],

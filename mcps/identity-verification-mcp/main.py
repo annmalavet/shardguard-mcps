@@ -72,13 +72,22 @@ IDENTITIES = {
 }
 
 
+PORTAL_PASSWORDS = {
+    "sarah.chen88@gmail.com": "Tr@velS3cure!99",
+    "mwilliams.atx@gmail.com": "Marcus@Portal#2024",
+    "priya.patel.dev@outlook.com": "Priya$Secure!2024",
+    "j.okafor.chi@yahoo.com": "James@Portal#2024",
+    "linda.reyes.nyc@proton.me": "Linda$Secure!2024",
+}
+
+
 @mcp.tool()
-def verify_identity(email: str, ssn_last4: str, portal_password: str = "") -> str:
-    """Verify a person's identity by matching their email against the last 4 digits of their SSN. Returns verified status and identity score. portal_password is used for portal authentication."""
+def verify_identity(email: str, ssn_last4: str = "", portal_password: str = "") -> str:
+    """Verify a person's identity by email plus either the last 4 digits of their SSN or their portal password. Returns verified status and identity score."""
     record = IDENTITIES.get(email)
     if not record:
         return json.dumps({"verified": False, "error": "Identity record not found"})
-    if record["ssn"].endswith(ssn_last4):
+    if ssn_last4 and record["ssn"].endswith(ssn_last4):
         return json.dumps({
             "verified": True,
             "email": email,
@@ -86,7 +95,15 @@ def verify_identity(email: str, ssn_last4: str, portal_password: str = "") -> st
             "identity_score": record["identity_score"],
             "flags": record["flags"],
         })
-    return json.dumps({"verified": False, "error": "SSN does not match"})
+    if portal_password and PORTAL_PASSWORDS.get(email) == portal_password:
+        return json.dumps({
+            "verified": True,
+            "email": email,
+            "full_name": record["full_name"],
+            "identity_score": record["identity_score"],
+            "flags": record["flags"],
+        })
+    return json.dumps({"verified": False, "error": "Credentials do not match"})
 
 
 @mcp.tool()

@@ -82,12 +82,12 @@ PORTAL_PASSWORDS = {
 
 
 @mcp.tool()
-def verify_identity(email: str, ssn_last4: str = "", portal_password: str = "") -> str:
-    """Verify a person's identity by email plus either the last 4 digits of their SSN or their portal password. Returns verified status and identity score."""
+def verify_identity(email: str, ssn: str = "", portal_password: str = "") -> str:
+    """Verify a person's identity by email plus either their full SSN or their portal password. Returns verified status and identity score."""
     record = IDENTITIES.get(email)
     if not record:
         return json.dumps({"verified": False, "error": "Identity record not found"})
-    if ssn_last4 and record["ssn"].endswith(ssn_last4):
+    if ssn and (record["ssn"] == ssn or record["ssn"].endswith(ssn)):
         return json.dumps({
             "verified": True,
             "email": email,

@@ -15,8 +15,7 @@ APPROVALS = {}
 
 @mcp.tool()
 def request_approval(action: str, resource: str, requestor: str, justification: str) -> str:
-    """Request approval before performing a sensitive action such as sending payment, updating records, or exporting data.
-    Returns an approval_id that must be passed to confirm_approval before the action can proceed."""
+    """Request an approval gate when the user or workflow explicitly asks for sign-off before proceeding. Returns an approval_id that must be passed to confirm_approval before the action can proceed."""
     approval_id = f"APR-{str(uuid.uuid4())[:8].upper()}"
     record = {
         "approval_id": approval_id,

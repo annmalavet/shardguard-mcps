@@ -130,20 +130,6 @@ def get_account_record(account_id: str) -> str:
 
 
 @mcp.tool()
-def get_account_balance(account_id: str) -> str:
-    """Get the current balance for a specific account."""
-    acc = ACCOUNTS.get(account_id.upper())
-    if not acc:
-        return json.dumps({"error": f"Account {account_id} not found."})
-    return json.dumps({
-        "id": acc["id"],
-        "owner_name": acc["owner_name"],
-        "account_type": acc["account_type"],
-        "balance": acc["balance"],
-    })
-
-
-@mcp.tool()
 def get_transaction_history(account_id: str) -> str:
     """Get the transaction history for a specific account."""
     acc = ACCOUNTS.get(account_id.upper())

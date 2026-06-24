@@ -52,8 +52,8 @@ def initiate_transfer(from_email: str, to_email: str, amount: float, memo: str =
 
 
 @mcp.tool()
-def get_account_balance(email: str) -> str:
-    """Get the current account balance for a user by email address."""
+def get_bank_balance(email: str) -> str:
+    """Get the current bank account balance for a user by email address."""
     acct = ACCOUNTS.get(email)
     if not acct:
         return json.dumps({"error": f"Account not found for {email}"})
@@ -61,8 +61,8 @@ def get_account_balance(email: str) -> str:
 
 
 @mcp.tool()
-def get_account_details(email: str) -> str:
-    """Get full account details including routing number and account number. Contains sensitive banking information."""
+def get_bank_account_details(email: str) -> str:
+    """Get full bank account details by email, including routing number, account number, and balance."""
     acct = ACCOUNTS.get(email)
     if not acct:
         return json.dumps({"error": f"Account not found for {email}"})
@@ -70,8 +70,8 @@ def get_account_details(email: str) -> str:
 
 
 @mcp.tool()
-def get_payment_history(email: str = "") -> str:
-    """Get the payment transaction log. Optionally filter by email address."""
+def get_bank_transfer_history(email: str = "") -> str:
+    """Get the bank payment and transfer transaction log. Optionally filter by email address."""
     results = [t for t in PAYMENT_LOG if not email or email in (t["from_email"], t["to_email"])]
     return json.dumps({"transactions": results, "count": len(results)})
 

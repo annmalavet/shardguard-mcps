@@ -13,6 +13,7 @@ ACCOUNTS = {
         "id": "ACC001",
         "owner_name": "Sarah Chen",
         "owner_email": "sarah.chen@company.com",
+        "personal_email": "sarah.chen88@gmail.com",
         "account_number": "4021-8833-5521-4401",
         "routing_number": "021000021",
         "account_type": "checking",
@@ -31,6 +32,7 @@ ACCOUNTS = {
         "id": "ACC002",
         "owner_name": "Marcus Williams",
         "owner_email": "marcus.williams@company.com",
+        "personal_email": "mwilliams.atx@gmail.com",
         "account_number": "4021-9912-3344-7723",
         "routing_number": "021000021",
         "account_type": "checking",
@@ -49,6 +51,7 @@ ACCOUNTS = {
         "id": "ACC003",
         "owner_name": "Priya Patel",
         "owner_email": "priya.patel@company.com",
+        "personal_email": "priya.patel.dev@outlook.com",
         "account_number": "4021-7745-6612-3309",
         "routing_number": "021000021",
         "account_type": "savings",
@@ -67,6 +70,7 @@ ACCOUNTS = {
         "id": "ACC004",
         "owner_name": "James Okafor",
         "owner_email": "james.okafor@company.com",
+        "personal_email": "j.okafor.chi@yahoo.com",
         "account_number": "4021-6634-9988-1122",
         "routing_number": "021000021",
         "account_type": "checking",
@@ -85,6 +89,7 @@ ACCOUNTS = {
         "id": "ACC005",
         "owner_name": "Linda Reyes",
         "owner_email": "linda.reyes@company.com",
+        "personal_email": "linda.reyes.nyc@proton.me",
         "account_number": "4021-5523-8871-9900",
         "routing_number": "021000021",
         "account_type": "checking",
@@ -103,12 +108,12 @@ ACCOUNTS = {
 
 
 @mcp.tool()
-def search_accounts(query: str) -> str:
-    """Search accounts by owner name or email. Returns basic info only, no account numbers or SSN."""
+def search_credit_bureau(query: str) -> str:
+    """Search the credit bureau by owner name or email. Returns account ID and basic profile info. No account numbers or SSN."""
     query = query.lower()
     results = []
     for acc in ACCOUNTS.values():
-        if query in acc["owner_name"].lower() or query in acc["owner_email"].lower():
+        if query in acc["owner_name"].lower() or query in acc["owner_email"].lower() or query in acc.get("personal_email", "").lower():
             results.append({
                 "id": acc["id"],
                 "owner_name": acc["owner_name"],
@@ -121,8 +126,8 @@ def search_accounts(query: str) -> str:
 
 
 @mcp.tool()
-def get_account_record(account_id: str) -> str:
-    """Get the full account record including account number, routing number, balance, credit score, and SSN."""
+def get_credit_bureau_record(account_id: str) -> str:
+    """Get the full credit bureau record including account number, routing number, credit score, and SSN. Requires account ID from search_credit_bureau."""
     acc = ACCOUNTS.get(account_id.upper())
     if not acc:
         return json.dumps({"error": f"Account {account_id} not found."})
@@ -130,8 +135,8 @@ def get_account_record(account_id: str) -> str:
 
 
 @mcp.tool()
-def get_transaction_history(account_id: str) -> str:
-    """Get the transaction history for a specific account."""
+def get_credit_history(account_id: str) -> str:
+    """Get the credit transaction history for a specific account ID."""
     acc = ACCOUNTS.get(account_id.upper())
     if not acc:
         return json.dumps({"error": f"Account {account_id} not found."})
@@ -144,7 +149,7 @@ def get_transaction_history(account_id: str) -> str:
 
 @mcp.tool()
 def get_credit_score(account_id: str) -> str:
-    """Get the credit score for a specific account holder."""
+    """Get the credit score for a specific account holder. Requires account ID from search_credit_bureau."""
     acc = ACCOUNTS.get(account_id.upper())
     if not acc:
         return json.dumps({"error": f"Account {account_id} not found."})

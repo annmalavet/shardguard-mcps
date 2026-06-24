@@ -93,6 +93,18 @@ BOOKINGS = [
     },
     {
         "booking_id": "BK002",
+        "email": "mwilliams.atx@gmail.com",
+        "type": "flight",
+        "origin": "AUS",
+        "destination": "ORD",
+        "departure": "2026-07-15T07:00:00",
+        "return": "2026-07-18T19:30:00",
+        "confirmation": "WN-TX88231",
+        "status": "confirmed",
+        "cost": 412.00,
+    },
+    {
+        "booking_id": "BK003",
         "email": "linda.reyes.nyc@proton.me",
         "type": "hotel",
         "property": "Marriott Marquis Times Square",

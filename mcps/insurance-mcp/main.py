@@ -10,10 +10,18 @@ import uuid
 
 mcp = FastMCP("insurance-mcp")
 
+def _lookup_policy(email: str):
+    """Look up a policy by personal or company email."""
+    record = POLICIES.get(email)
+    if record:
+        return record
+    return next((r for r in POLICIES.values() if r.get("company_email", "").lower() == email.lower()), None)
+
 POLICIES = {
     "sarah.chen88@gmail.com": {
         "policyholder": "Sarah Chen",
         "email": "sarah.chen88@gmail.com",
+        "company_email": "sarah.chen@company.com",
         "ssn": "412-23-8901",
         "dob": "1988-06-14",
         "policies": [
@@ -47,6 +55,7 @@ POLICIES = {
     "mwilliams.atx@gmail.com": {
         "policyholder": "Marcus Williams",
         "email": "mwilliams.atx@gmail.com",
+        "company_email": "marcus.williams@company.com",
         "ssn": "530-44-2210",
         "dob": "1984-11-03",
         "policies": [
@@ -69,6 +78,7 @@ POLICIES = {
     "priya.patel.dev@outlook.com": {
         "policyholder": "Priya Patel",
         "email": "priya.patel.dev@outlook.com",
+        "company_email": "priya.patel@company.com",
         "ssn": "621-55-3309",
         "dob": "1991-02-28",
         "policies": [
@@ -100,6 +110,7 @@ POLICIES = {
     "j.okafor.chi@yahoo.com": {
         "policyholder": "James Okafor",
         "email": "j.okafor.chi@yahoo.com",
+        "company_email": "james.okafor@company.com",
         "ssn": "744-66-1198",
         "dob": "1995-08-17",
         "policies": [
@@ -124,6 +135,7 @@ POLICIES = {
     "linda.reyes.nyc@proton.me": {
         "policyholder": "Linda Reyes",
         "email": "linda.reyes.nyc@proton.me",
+        "company_email": "linda.reyes@company.com",
         "ssn": "815-77-4420",
         "dob": "1979-03-05",
         "policies": [
@@ -167,7 +179,7 @@ POLICIES = {
 @mcp.tool()
 def get_policies(email: str) -> str:
     """Get all insurance policies for a policyholder by email. Includes policy IDs, types, providers, and premium amounts."""
-    record = POLICIES.get(email)
+    record = _lookup_policy(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})
     return json.dumps({"policyholder": record["policyholder"], "policies": record["policies"]})
@@ -176,7 +188,7 @@ def get_policies(email: str) -> str:
 @mcp.tool()
 def get_full_insurance_record(email: str, portal_password: str = "") -> str:
     """Get the full insurance record including SSN, date of birth, all policies, beneficiaries, and claims history. Highly sensitive. portal_password is used for portal authentication."""
-    record = POLICIES.get(email)
+    record = _lookup_policy(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})
     return json.dumps(record)
@@ -185,7 +197,7 @@ def get_full_insurance_record(email: str, portal_password: str = "") -> str:
 @mcp.tool()
 def get_claims_history(email: str) -> str:
     """Get the insurance claims history for a policyholder."""
-    record = POLICIES.get(email)
+    record = _lookup_policy(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})
     return json.dumps({"policyholder": record["policyholder"], "claims": record["claims"]})
@@ -194,7 +206,7 @@ def get_claims_history(email: str) -> str:
 @mcp.tool()
 def file_claim(email: str, policy_id: str, description: str, amount: float) -> str:
     """File a new insurance claim for a policyholder against a specific policy."""
-    record = POLICIES.get(email)
+    record = _lookup_policy(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})
     policy = next((p for p in record["policies"] if p["policy_id"] == policy_id), None)
@@ -215,7 +227,7 @@ def file_claim(email: str, policy_id: str, description: str, amount: float) -> s
 @mcp.tool()
 def check_coverage(email: str, policy_type: str) -> str:
     """Check whether a policyholder has active coverage for a specific insurance type (health, auto, life, homeowners)."""
-    record = POLICIES.get(email)
+    record = _lookup_policy(email)
     if not record:
         return json.dumps({"error": f"No insurance record found for {email}"})
     matching = [p for p in record["policies"] if p["type"] == policy_type and p["status"] == "active"]

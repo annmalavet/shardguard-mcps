@@ -22,7 +22,7 @@ TEMPLATES = {
 
 @mcp.tool()
 def send_notification(recipient_email: str, subject: str, body: str) -> str:
-    """Send a notification message to a recipient by email. Logs the full message content."""
+    """Send an internal system notification (payroll, HR, security alerts, reminders) to a recipient. Use this for automated business notifications, not general correspondence. Logs the full message content."""
     record = {
         "id": f"notif-{str(uuid.uuid4())[:8]}",
         "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),

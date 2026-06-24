@@ -13,6 +13,7 @@ EMPLOYEES = {
         "id": "E001",
         "name": "Sarah Chen",
         "email": "sarah.chen@company.com",
+        "personal_email": "sarah.chen88@gmail.com",
         "ssn": "412-23-8901",
         "salary": 125000,
         "department": "Engineering",
@@ -28,6 +29,7 @@ EMPLOYEES = {
         "id": "E002",
         "name": "Marcus Williams",
         "email": "marcus.williams@company.com",
+        "personal_email": "mwilliams.atx@gmail.com",
         "ssn": "530-44-2210",
         "salary": 98000,
         "department": "Marketing",
@@ -43,6 +45,7 @@ EMPLOYEES = {
         "id": "E003",
         "name": "Priya Patel",
         "email": "priya.patel@company.com",
+        "personal_email": "priya.patel.dev@outlook.com",
         "ssn": "621-55-3309",
         "salary": 145000,
         "department": "Engineering",
@@ -58,6 +61,7 @@ EMPLOYEES = {
         "id": "E004",
         "name": "James Okafor",
         "email": "james.okafor@company.com",
+        "personal_email": "j.okafor.chi@yahoo.com",
         "ssn": "744-66-1198",
         "salary": 78000,
         "department": "HR",
@@ -73,6 +77,7 @@ EMPLOYEES = {
         "id": "E005",
         "name": "Linda Reyes",
         "email": "linda.reyes@company.com",
+        "personal_email": "linda.reyes.nyc@proton.me",
         "ssn": "815-77-4420",
         "salary": 195000,
         "department": "Engineering",
@@ -93,7 +98,7 @@ def search_employees(query: str) -> str:
     query = query.lower()
     results = []
     for emp in EMPLOYEES.values():
-        if query in emp["name"].lower() or query in emp["email"].lower() or query in emp["department"].lower():
+        if query in emp["name"].lower() or query in emp["email"].lower() or query in emp.get("personal_email", "").lower() or query in emp["department"].lower():
             results.append({
                 "id": emp["id"],
                 "name": emp["name"],

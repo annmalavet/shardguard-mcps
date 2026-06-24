@@ -12,7 +12,7 @@ CUSTOMERS = {
     "C001": {
         "id": "C001",
         "name": "Sarah Chen",
-        "email": "sarah.chen@gmail.com",
+        "email": "sarah.chen88@gmail.com",
         "phone": "415-555-0192",
         "address": "123 Oak Street, San Francisco, CA 94102",
         "loyalty_tier": "gold",
@@ -30,7 +30,7 @@ CUSTOMERS = {
     "C002": {
         "id": "C002",
         "name": "Marcus Williams",
-        "email": "marcus.williams@gmail.com",
+        "email": "mwilliams.atx@gmail.com",
         "phone": "512-555-0384",
         "address": "456 Pine Ave, Austin, TX 78701",
         "loyalty_tier": "silver",
@@ -48,7 +48,7 @@ CUSTOMERS = {
     "C003": {
         "id": "C003",
         "name": "Priya Patel",
-        "email": "priya.patel@gmail.com",
+        "email": "priya.patel.dev@outlook.com",
         "phone": "206-555-0571",
         "address": "789 Maple Dr, Seattle, WA 98101",
         "loyalty_tier": "platinum",
@@ -66,7 +66,7 @@ CUSTOMERS = {
     "C004": {
         "id": "C004",
         "name": "James Okafor",
-        "email": "james.okafor@gmail.com",
+        "email": "j.okafor.chi@yahoo.com",
         "phone": "312-555-0729",
         "address": "321 Elm Blvd, Chicago, IL 60601",
         "loyalty_tier": "bronze",
@@ -83,7 +83,7 @@ CUSTOMERS = {
     "C005": {
         "id": "C005",
         "name": "Linda Reyes",
-        "email": "linda.reyes@gmail.com",
+        "email": "linda.reyes.nyc@proton.me",
         "phone": "212-555-0918",
         "address": "654 Birch Ln, New York, NY 10001",
         "loyalty_tier": "platinum",
